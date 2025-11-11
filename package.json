@@ -1,26 +1,28 @@
 {
   "name": "nodejs_app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "REST API with Express, SQLite, and JWT",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Peushi/nodeJs_app.git"
   },
-  "keywords": [],
+  "keywords": ["api", "rest", "express", "sqlite"],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Peushi/nodeJs_app/issues"
   },
   "homepage": "https://github.com/Peushi/nodeJs_app#readme",
-  "type": "module",
   "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "dotenv": "^16.4.7",
     "express": "^5.1.0"
   },
   "devDependencies": {

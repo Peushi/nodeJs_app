@@ -4,6 +4,7 @@ import { logMiddleware } from "./middleware/middleware.js"
 import { validateApiKey, validateApiKeyProduction } from "./middleware/apiKey.js"  
 import userRoutes from "./routes/userRoutes.js"
 import { initializeDatabase } from "./config/database.js"
+import songRoutes from "./routes/songRoutes.js"
 
 const app = express()
 
@@ -12,6 +13,8 @@ await initializeDatabase()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(logMiddleware)
+app.use('/users', validateApiKey, userRoutes)
+app.use('/songs', validateApiKey, songRoutes)
 
 app.get('/', (req, res) => {
 	res.json({ 
@@ -19,7 +22,8 @@ app.get('/', (req, res) => {
 		version: "1.0.0",
 		environment: config.nodeEnv,
 		endpoints: {
-			users: "/users"
+			users: "/users (Protected)",
+			songs: "/songs (Protected)"
 		}
 	})
 })
@@ -66,6 +70,12 @@ app.listen(config.port, () => {
 	console.log(`  POST   /users         - Create new user (protected)`)
 	console.log(`  PUT    /users/:id     - Update user (protected)`)
 	console.log(`  DELETE /users/:id     - Delete user (protected)`)
+	console.log(``)
+	console.log(`   GET    /songs       - Get all songs(protected)`)
+	console.log(`   GET    /songs/:id   - Get song by ID(protected)`)
+	console.log(`   POST   /songs       - Create new song(protected)`)
+	console.log(`   PUT    /songs/:id   - Update song(protected)`)
+	console.log(`   DELETE /songs/:id   - Delete song(protected)`)
 })
 
 export default app

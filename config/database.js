@@ -24,11 +24,14 @@ export const initializeDatabase = async () => {
 	console.log('🔧 Initializing database...')
 	
 	const User = (await import('../models/User.js')).default
+	const Song = (await import('../models/song.js')).default
 	
 	User.createTable()
+	Song.createTable()
 	
 	if (config.isDevelopment()) {
 		User.seed()
+		Song.seed()
 	}
 	
 	console.log('✅ Database initialization complete')

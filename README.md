@@ -7,18 +7,6 @@ A simple REST API built with Express and SQLite that supports CRUD operations fo
 The project follows a clean modular structure using controllers, services, and routes.
 ---
 
-## Table of Contents
-
-- [Features](#features)  
-- [Project Structure](#project-structure)  
-- [Installation](#installation)  
-- [Database Setup](#database-setup)  
-- [Running the App](#running-the-app)  
-- [API Endpoints](#api-endpoints)  
-- [License](#license)  
-
----
-
 ## Features
 -Organized MVC-like structure
 -CRUD operations for Users and Songs

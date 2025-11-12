@@ -3,8 +3,8 @@
 A simple RESTful API built with **Node.js**, **Express**, and **SQLite**.  
 This project demonstrates a three-layer architecture with **Controllers**, **Services**, and **Routes**, and uses **middleware** for logging and future authentication (JWT-ready).
 
-A simple RESTful API to manage users with full CRUD functionality.
-Built with a clean three-layer architecture: routes for endpoints, controllers for HTTP logic, and services for business logic and database operations.
+A simple REST API built with Express and SQLite that supports CRUD operations for Users and Songs.
+The project follows a clean modular structure using controllers, services, and routes.
 ---
 
 ## Table of Contents
@@ -20,24 +20,28 @@ Built with a clean three-layer architecture: routes for endpoints, controllers f
 ---
 
 ## Features
-
-- RESTful API endpoints for **CRUD operations** on users  
-- Persistent storage with **SQLite**  
-- Middleware support for logging and future authentication  
-- Modular folder structure for scalability  
-- Easy to switch to other databases in the service layer  
+-Organized MVC-like structure
+-CRUD operations for Users and Songs
+-SQLite database integration
+-Express 5 routing
+-.env support with dotenv
+-Nodemon for development
 
 ---
 
 ## Project Structure
-├── controllers/
-│ └── userController.js ← Handles HTTP requests/responses
-├── middleware/
-│ └── middleware.js ← Logging middleware
-├── routes/
-│ └── userRoutes.js ← User route definitions
-├── services/
-│ └── userService.js ← Business logic and database access
 ├── config/
-│ └── database.js ← SQLite database connection
-└── index.js ← Main server file
+│   └── database.js
+├── controllers/
+│   ├── userController.js
+│   └── songController.js
+├── middleware/
+│   └── middleware.js
+├── routes/
+│   ├── userRoutes.js
+│   └── songRoutes.js
+├── services/
+│   ├── userService.js
+│   └── songService.js
+└── index.js
+

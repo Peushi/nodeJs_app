@@ -1,4 +1,6 @@
 import express from "express"
+import path from "path";
+import { fileURLToPath } from "url";
 import config from "./config/config.js"  
 import { logMiddleware } from "./middleware/middleware.js"
 import { validateApiKey, validateApiKeyProduction } from "./middleware/apiKey.js"  
@@ -7,6 +9,9 @@ import { initializeDatabase } from "./config/database.js"
 import songRoutes from "./routes/songRoutes.js"
 
 const app = express()
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 await initializeDatabase()
 
@@ -28,6 +33,10 @@ app.get('/', (req, res) => {
 	})
 })
 
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'))
+})
+
 app.get('/health', (req, res) => {
 	res.json({ 
 		status: 'OK',
@@ -35,13 +44,6 @@ app.get('/health', (req, res) => {
 		environment: config.nodeEnv
 	})
 })
-
-// Protected routes (API key required)
-// Option 1: Protect all /users routes
-app.use('/users', validateApiKey, userRoutes)
-
-// Option 2: Only protect in production (easier for development)
-// app.use('/users', validateApiKeyProduction, userRoutes)
 
 app.use((req, res) => {
 	res.status(404).json({ 
@@ -60,6 +62,7 @@ app.use((err, req, res, next) => {
 
 app.listen(config.port, () => {
 	console.log(`✅ Server running on http://localhost:${config.port}`)
+	console.log(`📱 Open browser: http://localhost:${config.port}`)
 	console.log(`📊 Environment: ${config.nodeEnv}`)
 	console.log(`🔒 API Key protection: ${config.apiKey ? 'ENABLED' : 'DISABLED'}`)
 	console.log(`\nAPI Endpoints:`)

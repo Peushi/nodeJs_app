@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users & Songs API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Users & Songs</h1>
+
+        <div class="grid">
+            <!-- Users Section -->
+            <div class="section">
+                <h2>👥 Users</h2>
+                <div id="usersContainer">
+                    <div class="loading">Loading users...</div>
+                </div>
+            </div>
+
+            <!-- Songs Section -->
+            <div class="section">
+                <h2>🎵 Songs</h2>
+                <div id="songsContainer">
+                    <div class="loading">Loading songs...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'my-super-secret-api-key-change-this-in-production';
+
+        // Fetch with API key
+        async function fetchWithAuth(url) {
+            const response = await fetch(url, {
+                headers: {
+                    'X-API-Key': API_KEY
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+
+            return response.json();
+        }
+
+        // Load Users
+        async function loadUsers() {
+            const container = document.getElementById('usersContainer');
+            
+            try {
+                const users = await fetchWithAuth('/users');
+                
+                if (!users || users.length === 0) {
+                    container.innerHTML = '<p class="loading">No users found</p>';
+                    return;
+                }
+
+                container.innerHTML = users.map(user => `
+                    <div class="card">
+                        <h3>${user.name}</h3>
+                        <p><span class="label">ID:</span> ${user.id}</p>
+                        <p><span class="label">Email:</span> ${user.email || 'N/A'}</p>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                container.innerHTML = `<div class="error">Failed to load users: ${error.message}</div>`;
+            }
+        }
+
+        // Load Songs
+        async function loadSongs() {
+            const container = document.getElementById('songsContainer');
+            
+            try {
+                const songs = await fetchWithAuth('/songs');
+                
+                if (!songs || songs.length === 0) {
+                    container.innerHTML = '<p class="loading">No songs found</p>';
+                    return;
+                }
+
+                container.innerHTML = songs.map(song => `
+                    <div class="card">
+                        <h3>🎵 ${song.title}</h3>
+                        <p><span class="label">Artist:</span> ${song.artist}</p>
+                        <p><span class="label">Album:</span> ${song.album || 'N/A'}</p>
+                        <p><span class="label">Duration:</span> ${song.duration || 'N/A'}</p>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                container.innerHTML = `<div class="error">Failed to load songs: ${error.message}</div>`;
+            }
+        }
+
+        // Auto-load data when page loads
+        window.addEventListener('load', () => {
+            loadUsers();
+            loadSongs();
+        });
+    </script>
+</body>
+</html>

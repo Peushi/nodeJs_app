@@ -13,7 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/Peushi/nodeJs_app.git"
   },
-  "keywords": ["api", "rest", "express", "sqlite"],
+  "keywords": [
+    "api",
+    "rest",
+    "express",
+    "sqlite"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -22,6 +27,7 @@
   "homepage": "https://github.com/Peushi/nodeJs_app#readme",
   "dependencies": {
     "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0"
   },

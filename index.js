@@ -2,6 +2,7 @@ import express from "express"
 import path from "path";
 import { fileURLToPath } from "url";
 import config from "./config/config.js"  
+import cors from "cors";
 import { logMiddleware } from "./middleware/middleware.js"
 import { validateApiKey, validateApiKeyProduction } from "./middleware/apiKey.js"  
 import userRoutes from "./routes/userRoutes.js"
@@ -16,6 +17,7 @@ const __dirname = path.dirname(__filename);
 await initializeDatabase()
 
 app.use(express.json())
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(logMiddleware)
 app.use('/users', validateApiKey, userRoutes)

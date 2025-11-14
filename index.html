@@ -111,11 +111,12 @@
     </div>
 
     <script>
+        const API_BASE = 'https://nodejs-app-exhw.onrender.com';
         const API_KEY = 'my-super-secret-api-key-change-this-in-production';
 
         // Fetch with API key
         async function fetchWithAuth(url) {
-            const response = await fetch(url, {
+            const response = await fetch(API_BASE + url, {
                 headers: {
                     'X-API-Key': API_KEY
                 }

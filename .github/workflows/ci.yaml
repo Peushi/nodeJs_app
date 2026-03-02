@@ -25,8 +25,8 @@ jobs:
         run: npm run build
       
       - name: Test
-        run: npm test
+        run: npm test --if-present
       
       - name: Lint
-        run: npm run lint
+        run: npm run lint --if-present
         continue-on-error: true

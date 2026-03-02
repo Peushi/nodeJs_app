@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo 'Build successful'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo 'No linting configured'"
   },
   "repository": {
     "type": "git",

@@ -6,7 +6,7 @@ import cors from "cors";
 import { logMiddleware } from "./middleware/middleware.js"
 import { validateApiKey, validateApiKeyProduction } from "./middleware/apiKey.js"  
 import userRoutes from "./routes/userRoutes.js"
-import { initializeDatabase } from "./config/database.js"
+//import { initializeDatabase } from "./config/database.js"
 import songRoutes from "./routes/songRoutes.js"
 
 const app = express()
@@ -14,7 +14,7 @@ const app = express()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-await initializeDatabase()
+//await initializeDatabase()
 
 app.use(express.json())
 app.use(cors())

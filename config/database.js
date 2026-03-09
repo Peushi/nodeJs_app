@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename)
 
 let dbPath
 
-// Use /tmp in Docker/production, otherwise use local path
 if (process.env.NODE_ENV === 'production') {
   dbPath = '/tmp/database.sqlite'
 } else if (path.isAbsolute(config.databaseUrl)) {
@@ -19,9 +18,26 @@ if (process.env.NODE_ENV === 'production') {
 
 console.log(`📊 Database path: ${dbPath}`)
 
-// Allow SQLite to create the file if it doesn’t exist
 const db = new Database(dbPath, { fileMustExist: false })
-
 db.pragma('foreign_keys = ON')
 
+// ----- re-add initializeDatabase -----
+export const initializeDatabase = async () => {
+  console.log('🔧 Initializing database...')
+
+  const User = (await import('../models/User.js')).default
+  const Song = (await import('../models/song.js')).default
+
+  User.createTable()
+  Song.createTable()
+
+  if (config.isDevelopment()) {
+    User.seed()
+    Song.seed()
+  }
+
+  console.log('✅ Database initialization complete')
+}
+
+// ----- keep default export for db -----
 export default db
